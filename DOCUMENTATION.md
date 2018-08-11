@@ -3,6 +3,7 @@
 - [Position](#position)
 - [Edge](#edge)
 - [Graph](#graph)
+- [Mazelight](#mazelight)
 
 ## Position
 - [public Position(x,y)](#position1)
@@ -54,7 +55,9 @@ Constructor.
 - `Position end`: The end Position object.  
 - `int weight`: The weight of the edge.
 
-*Returns*: Nothing
+*Returns*: Nothing.  
+*Throws*:
+- [Error 001x001](#)
 
 <a name="edge2"></a>
 #### public getStart()
@@ -109,7 +112,9 @@ Creates a new edge in the Graph.
 - `Position start`: The start Position object of the edge.  
 - `Position end`: The end Position object of the edge.  
 
-*Returns*: Nothing
+*Returns*: Nothing.  
+*Throws*:
+- [Error 001x001](#)
 
 <a name="graph4"></a>
 #### public addEdge(start, end)
@@ -137,3 +142,25 @@ Returns the weight of an edge in the Graph.
 - `Position end`: The end Position object of the edge.  
 
 *Returns*: `int`: Weight of the edge (-1 if does not exist)
+
+## Mazelight
+- [private imageToGraphics(path)](#mazelight1)
+- [private graphicsToGraph(graphics)](#mazelight2)
+
+<a name="mazelight1"></a>
+#### private imageToGraphics(path)
+Converts an image to a Graphics2D object.
+*Parameters*:
+- `String path`: The path of the image.  
+
+*Returns*: `Graphics2D`: Black and white Graphics2D image.  
+*Throws*:
+- `IOException`  
+
+<a name="mazelight2"></a>
+#### private graphicsToGraph(graphics)
+Converts an Graphics2D object to a Graph object. Every node in the Graph is identified by its pixel position in the image (and stored into a Position object). A node is an intersection between two paths in a maze. The weight of the edge is the number of pixels between two nodes.  
+*Parameters*:
+- `Graphics2D graphics`: The Graphics2D object.  
+
+*Returns*: `Graph`: The Graph object that contains the maze.  
