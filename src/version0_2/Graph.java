@@ -35,34 +35,12 @@ public class Graph{
         }
     }
 
-    public class Position{
-        private int x;
-        private int y;
-
-        public Position(int x, int y){
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-        public int getY() {
-            return y;
-        }
-
-        public boolean equals(Position pos){
-            return this.x == pos.getX() && this.y == pos.getY();
-        }
-
-    }
-
     private LinkedList<Edge> edges = new LinkedList<Edge>();
 
     public Graph(){}
 
     public int size(){
-        return edges.size()/2;
+        return edges.size() /2;
     }
 
     public void addEdge(Position start, Position end) throws Exception{
@@ -101,5 +79,14 @@ public class Graph{
         return -1;
     }
 
+    public LinkedList<Position> getAdjacents(Position pos){
+        LinkedList<Position> result = new LinkedList<Position>();
+        for(int i = 0; i < this.edges.size(); i = i+2){
+            if(this.edges.get(i).getStart().equals(pos)){
+                result.addLast(this.edges.get(i).getEnd());
+            }
+        }
+        return result;
+    }
 
 }

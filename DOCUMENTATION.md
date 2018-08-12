@@ -92,6 +92,7 @@ Sets the weight of the Edge object.
 - [public removeEdge(start, end)](#graph4)
 - [public isEdge(start, end)](#graph5)
 - [public getWeight(start, end)](#graph6)
+- [public getAdjacents(pos)](#graph7)
 
 <a name="graph1"></a>
 #### public Graph()
@@ -134,7 +135,7 @@ Checks if the edge exists.
 
 *Returns*: `boolean`: true or false.
 
-<a name="graph6"></a>
+<a name="graph7"></a>
 #### public getWeight(start, end)
 Returns the weight of an edge in the Graph.  
 *Parameters*:
@@ -143,24 +144,41 @@ Returns the weight of an edge in the Graph.
 
 *Returns*: `int`: Weight of the edge (-1 if does not exist)
 
+#### public getAdjacents(pos)
+Returns a list with the adjacents to the pos object.  
+*Parameters*:
+- `Position pos`: The Position object from where to get the adjacents.  
+
+*Returns*: `LinkedList<Position>`: Adjacent list.
+
 ## Mazelight
-- [private imageToGraphics(path)](#mazelight1)
-- [private graphicsToGraph(graphics)](#mazelight2)
+- [private isNode(list, pos)](#mazelight0)
+- [private imageToBuffer(path)](#mazelight1)
+- [private bufferToGraph(graphics)](#mazelight2)
+
+<a name="mazelight0"></a>
+#### private isNode(list, pos)
+Checks if the Position pos object is a node in the LinkedList list object.  
+*Parameters*:
+- `LinkedList<Position> list`: The LinkedList list object.
+- `Position pos`: The Position pos object to check.  
+
+*Returns*: `boolean`: true or false.  
 
 <a name="mazelight1"></a>
-#### private imageToGraphics(path)
-Converts an image to a Graphics2D object.
+#### private imageToBuffer(path)
+Converts an image to a BufferedImage object.
 *Parameters*:
 - `String path`: The path of the image.  
 
-*Returns*: `Graphics2D`: Black and white Graphics2D image.  
+*Returns*: `BufferedImage`: Black and white BufferedImage object.  
 *Throws*:
 - `IOException`  
 
 <a name="mazelight2"></a>
-#### private graphicsToGraph(graphics)
-Converts an Graphics2D object to a Graph object. Every node in the Graph is identified by its pixel position in the image (and stored into a Position object). A node is an intersection between two paths in a maze. The weight of the edge is the number of pixels between two nodes.  
+#### private bufferToGraph(buffer)
+Converts an BufferedImage object to a Graph object. Every node in the Graph is identified by its pixel position in the image (and stored into a Position object). A node is an intersection between two paths in a maze. The weight of the edge is the number of pixels between two nodes.  
 *Parameters*:
-- `Graphics2D graphics`: The Graphics2D object.  
+- `BufferedImage buffer`: The BufferedImage object.  
 
 *Returns*: `Graph`: The Graph object that contains the maze.  
