@@ -77,17 +77,17 @@ public class Mazelight {
         //Path finding algorithm
         for(int i = 0; i < nodes.size(); i++){
             Position current = nodes.get(i);
-            int x, y;
+            int x, y, c;
 
             //Search nodes on the top and bottom
-            x = current.getX(); y = current.getY() - 1;
-            while(y >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { y--; }
-            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y)); }
+            x = current.getX(); y = current.getY() - 1; c = 1;
+            while(y >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { y--; c++; }
+            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), c); }
 
             //Search nodes on the left and right
-            x = current.getX() - 1; y = current.getY();
-            while(x >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { x--; }
-            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y)); }
+            x = current.getX() - 1; y = current.getY(); c = 1;
+            while(x >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { x--; c++; }
+            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), c); }
         }
 
         System.out.println("Start: " + start.getX() + ", " + start.getY());

@@ -43,9 +43,9 @@ public class Graph{
         return edges.size() /2;
     }
 
-    public void addEdge(Position start, Position end) throws Exception{
-        this.edges.addLast(new Edge(start, end, 0));
-        this.edges.addLast(new Edge(end, start, 0));
+    public void addEdge(Position start, Position end, int weight) throws Exception{
+        this.edges.addLast(new Edge(start, end, weight));
+        this.edges.addLast(new Edge(end, start, weight));
     }
 
     public void removeEdge(Position start, Position end){
