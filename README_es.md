@@ -1,5 +1,8 @@
 
+
 ![Logo Mazelight](https://github.com/SrGMC/mazelight/raw/master/logo.png)
+Idioma: [en](https://github.com/SrGMC/mazelight/blob/master/README.md) **[es](https://github.com/SrGMC/mazelight/blob/master/README_es.md)**
+
 # Mazelight
 Herramienta CLI de código abierto basada en Java diseñada para resolver laberintos.
 
