@@ -10,9 +10,9 @@
   - [Program arguments](#programarguments) 
 - [TODO](#todo)
 - [How it works](#howitworks)
-- [Documentation](https://github.com/SrGMC/mazelight/DOCUMENTATION.md)
+- [Documentation](https://github.com/SrGMC/mazelight/blob/master/DOCUMENTATION.md)
 - [Contribute](#contribute)
-- [License](https://github.com/SrGMC/mazelight/LICENSE)
+- [License](https://github.com/SrGMC/mazelight/blob/master/LICENSE)
 
 <a name="about"></a>
 ## About Mazelight
@@ -56,23 +56,23 @@ To get started first make sure you have at least [Java 1.8](https://java.com/dow
 
 <a name="todo"></a>
 ## TODO
-Ordered by priority
- - [] Implement Dijkstra's algorithm.
- - [] Optimize Graph.java:
+Ordered by priority.
+-[] Implement Dijkstra's algorithm.
+-[] Optimize Graph.java:
    There's no need to add the edge inversed again.  
- - [] Implement command line arguments.
- - [] Expand documentation. Finish README.md
- - [] Create API.
+-[] Implement command line arguments.
+-[x] Expand documentation. Finish README.md
+-[] Create API.
 
 <a name="howitworks"></a>
 ## How it works
 Mazelight works by analyzing an image of a maze and then converting it into a graph, so it can run algorithms to find the best solution to the problem.
-More information can be found ~~[here](https://github.com/SrGMC/mazelight/HOWITWORKS.md)~~ (Not available, yet).
+More information can be found ~~[here](https://github.com/SrGMC/mazelight/blob/master/HOWITWORKS.md)~~ (Not available, yet).
 
-## [Documentation](https://github.com/SrGMC/mazelight/DOCUMENTATION.md)
+## [Documentation](https://github.com/SrGMC/mazelight/blob/master/DOCUMENTATION.md)
 
 <a name="contribute"></a>
 ## Contribute
 Feel free to create issues and pull requests to solve bugs or create new features. Please check the license file in the link below  
 
-## [License](https://github.com/SrGMC/mazelight/LICENSE)
+## [License](https://github.com/SrGMC/mazelight/blob/master/LICENSE)
