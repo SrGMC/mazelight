@@ -1,5 +1,7 @@
 
-![Mazelight logo](https://github.com/SrGMC/mazelight/raw/master/logo.png)
+![Mazelight logo](https://github.com/SrGMC/mazelight/raw/master/logo.png)  
+Language: **[en](https://github.com/SrGMC/mazelight/blob/master/README.md)** [es](https://github.com/SrGMC/mazelight/blob/master/README_es.md)
+
 # Mazelight
 [WIP] Java-based Open Source CLI tool designed to solve mazes.
 
