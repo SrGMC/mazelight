@@ -52,7 +52,7 @@ To get started first make sure you have at least [Java 1.8](https://java.com/dow
   - `dijkstra`: Dijkstra's algorithm. (Default)
 - `-N`: Shows nodes in the output image.
 - `-rN R -gN G -bN B`: The color used to show the nodes in the output image (Default: -rN 0 -gN 255 -bN 0).
-- `-rP R -gP G -bP B`: The color used for the solved path in the output image (Default: -rN 255 -gN 0 -bN 0).
+- `-rP R -gP G -bP B`: The color used for the solved path in the output image (Default: -rP 255 -gP 0 -bP 0).
 - `-P`: Prints in the command line the shortest path found.
 
 <a name="todo"></a>
