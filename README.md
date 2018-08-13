@@ -1,3 +1,4 @@
+
 ![Mazelight logo](https://github.com/SrGMC/mazelight/raw/master/logo.png)
 # Mazelight
 [WIP] Java-based Open Source CLI tool designed to solve mazes.
@@ -57,12 +58,14 @@ To get started first make sure you have at least [Java 1.8](https://java.com/dow
 <a name="todo"></a>
 ## TODO
 Ordered by priority.
--[] Implement Dijkstra's algorithm.
--[] Optimize Graph.java:
-   There's no need to add the edge inversed again.  
--[] Implement command line arguments.
--[x] Expand documentation. Finish README.md
--[] Create API.
+
+ - [ ] Implement Dijkstra's algorithm.
+ - [ ] Optimize Graph.java:
+    There's no need to add the edge inversed again.  
+ - [ ] Implement command line arguments.
+ - [ ] Expand documentation.
+ - [x] Finish README.md.
+ - [ ] Create API.
 
 <a name="howitworks"></a>
 ## How it works
