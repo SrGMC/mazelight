@@ -1,4 +1,4 @@
-package master;
+package dijkstra;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -8,6 +8,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import java.util.LinkedList;
+
+import java.util.PriorityQueue;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Mazelight {
 
@@ -119,10 +124,51 @@ public class Mazelight {
         return list;
     }
 
+    public static void computePaths(Graph graph, Position source){
+        source.setMinDistance(0);
+        PriorityQueue<Position> vertexQueue = new PriorityQueue<Position>();
+        vertexQueue.add(source);
+
+        while (!vertexQueue.isEmpty()) {
+            Position u = vertexQueue.poll();
+
+            LinkedList<Position> adjacencies = graph.getAdjacents(u);
+            // Visit each edge exiting u
+            for (int i = 0; i < adjacencies.size(); i++){
+                Position v = adjacencies.get(i);
+                int weight = graph.getWeight(source, v);
+                int distanceThrough = u.getMinDistance() + weight;
+                if (distanceThrough < v.getMinDistance()) {
+                    vertexQueue.remove(v);
+
+                    v.setMinDistance(distanceThrough);
+                    v.setPrevious(u);
+                    vertexQueue.add(u);
+                }
+            }
+        }
+    }
+
+    public static List<Position> getShortestPathTo(Position target){
+        List<Position> path = new ArrayList<Position>();
+        for (Position vertex = target; vertex != null; vertex = vertex.getPrevious())
+            path.add(vertex);
+
+        Collections.reverse(path);
+        return path;
+    }
+
     public static void main(String[] args) throws IOException, Exception {
         long startT = System.currentTimeMillis();
 
         Graph maze = bufferToGraph(imageToBuffer("mazes/maze1.png"));
+
+        computePaths(maze, start);
+        System.out.println("Distance to [" + end.getX() + "," + end.getY() + "]: " + end.getMinDistance());
+
+        List<Position> path = getShortestPathTo(end);
+        System.out.println("Path: " + path);
+
 
         System.out.println("\n\nTotal computation time: " + (System.currentTimeMillis() - startT) + "ms");
     }

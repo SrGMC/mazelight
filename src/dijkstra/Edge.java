@@ -1,4 +1,4 @@
-package master;
+package dijkstra;
 public class Edge{
     private Position start;
     private Position end;

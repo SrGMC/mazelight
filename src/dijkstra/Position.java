@@ -1,4 +1,4 @@
-package master;
+package dijkstra;
 
 public class Position implements Comparable<Position>{
     private int x;

@@ -1,4 +1,4 @@
-package master;
+package dijkstra;
 
 import java.util.LinkedList;
 
