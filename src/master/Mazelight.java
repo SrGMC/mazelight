@@ -1,4 +1,4 @@
-package version0_2;
+package master;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -20,6 +20,9 @@ public class Mazelight {
     private static Color colorGreen = new Color(0, 255, 0);
     private static int green = colorGreen.getRGB();
 
+    private static Position start = null;
+    private static Position end = null;
+
     private static boolean isNode(LinkedList<Position> list, Position pos){
         for(int i = 0; i < list.size(); i++){
             if(list.get(i).equals(pos)){
@@ -39,8 +42,6 @@ public class Mazelight {
 
     private static Graph bufferToGraph(BufferedImage img) throws IOException, Exception{
         Graph graph = new Graph();
-        Position start = null;
-        Position end = null;
         LinkedList<Position> nodes = new LinkedList<Position>();
 
         //Node finder
@@ -79,15 +80,20 @@ public class Mazelight {
             Position current = nodes.get(i);
             int x, y, c;
 
+            System.out.println("Finding edges from: [" + current.getX() + ", " + current.getY() + "]");
             //Search nodes on the top and bottom
+            System.out.println("Above: ");
             x = current.getX(); y = current.getY() - 1; c = 1;
-            while(y >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { y--; c++; }
-            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), c); }
+            while(y >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { System.out.println("c=" + c + "[" + x + ", " + y + "] is not a node"); y--; c++; }
+            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { System.out.println("c=" + c + "[" + x + ", " + y + "] is node"); graph.addEdge(current, new Position(x,y), c); System.out.println("c=" + c ); }
 
             //Search nodes on the left and right
+            System.out.println("Sides: ");
             x = current.getX() - 1; y = current.getY(); c = 1;
-            while(x >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { x--; c++; }
-            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), c); }
+            while(x >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { System.out.println("c=" + c + "[" + x + ", " + y + "] is not a node"); x--; c++; }
+            if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { System.out.println("c=" + c + "[" + x + ", " + y + "] is node"); graph.addEdge(current, new Position(x,y), c); System.out.println("c=" + c ); }
+
+            System.out.println("");
         }
 
         System.out.println("Start: " + start.getX() + ", " + start.getY());
@@ -98,9 +104,26 @@ public class Mazelight {
         return graph;
     }
 
+
+    private static LinkedList<Position> sortByWeight(Graph graph, Position start, LinkedList<Position> list){
+        for(int i = 0; i < list.size(); i++){
+            for(int j = 0; j < list.size()-i-1; j++){
+                if(graph.getWeight(start, list.get(j)) > graph.getWeight(start, list.get(j+1))){
+                    Position temp = list.get(j);
+                    list.set(j, list.get(j+1));
+                    list.set(j+1, temp);
+                }
+            }
+        }
+
+        return list;
+    }
+
     public static void main(String[] args) throws IOException, Exception {
-        long start = System.currentTimeMillis();
-    	Graph maze = bufferToGraph(imageToBuffer("mazes/maze1.png"));
-        System.out.println("Total computation time: " + (System.currentTimeMillis() - start) + "ms");
+        long startT = System.currentTimeMillis();
+
+        Graph maze = bufferToGraph(imageToBuffer("mazes/maze1.png"));
+
+        System.out.println("\n\nTotal computation time: " + (System.currentTimeMillis() - startT) + "ms");
     }
 }
