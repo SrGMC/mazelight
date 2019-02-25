@@ -62,8 +62,7 @@ To get started first make sure you have at least [Java 1.8](https://java.com/dow
 Ordered by priority.
 
  - [ ] Implement Dijkstra's algorithm.
- - [x] Implement A*
- - [x] Optimize Graph.java:
+ - [ ] Optimize Graph.java:
     There's no need to add the edge inversed again.  
  - [ ] Implement command line arguments.
  - [ ] Expand documentation.
