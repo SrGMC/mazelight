@@ -25,7 +25,7 @@ Mazelight is a Java-based Open Source CLI tool that can solve mazes. It uses a c
 ## Get started
 <a name="prerequisites"></a>
 ### Prerequisites
-Mazelight currently supports images up to 512x512px in black and white (although the solved image contains color for the solution).  
+Mazelight currently supports images up to 512x512px in **black and white** (although the solved image contains color for the solution).  
 Mazes must be surrounded by a wall and only contain one start point and one exit point.  
 Maze paths must have 1px of width. Maze walls can be wider.
 Example mazes are provided in the `mazes/` folder.
