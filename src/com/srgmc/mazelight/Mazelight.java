@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 
 /**
@@ -78,6 +79,24 @@ public class Mazelight {
 
         return img;
     }
+    
+    private static BufferedImage draw(BufferedImage image, Position start, Position end, int rgb) {
+    	if(start.getX() == end.getX()) {
+    		int min = Math.min(start.getY(), end.getY());
+    		int max = Math.max(start.getY(), end.getY());
+    		for (int i = min; i <= max; i++) {
+				image.setRGB(start.getX(), i, rgb);
+			}
+    	} else {
+    		int min = Math.min(start.getX(), end.getX());
+    		int max = Math.max(start.getX(), end.getX());
+    		for (int i = min; i <= max; i++) {
+				image.setRGB(i, start.getY(), rgb);
+			}
+    	}
+    	
+    	return image;
+    }
 
     /**
      * Converts a BufferedImage object into a Graph object
@@ -131,7 +150,6 @@ public class Mazelight {
             if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), cost); }
 
             //Search nodes on the left and right
-            System.out.println("Sides: ");
             x = current.getX() - 1; y = current.getY(); cost = 1;
             while(x >= 0 && img.getRGB(x, y) != black && !isNode(nodes, new Position(x,y))) { x--; cost++; }
             if(isNode(nodes, new Position(x,y)) && !graph.isEdge(current, new Position(x,y))) { graph.addEdge(current, new Position(x,y), cost); }
@@ -145,17 +163,82 @@ public class Mazelight {
      * @param graph Graph to solve
      * @return Path as LinkedList
      */
-    public static LinkedList<Position> aStar(Graph graph){
+    private static Relative aStar(Graph graph){
+    	LinkedList<Relative> open = new LinkedList<Relative>();
+    	LinkedList<Relative> closed = new LinkedList<Relative>();
+    	Relative current;
+    	
+    	int heuristic = (int)Math.sqrt(Math.pow(Math.abs(start.getX() - end.getX()), 2) + Math.pow(Math.abs(start.getY() - end.getY()), 2));
+    	Relative s = new Relative(start, heuristic, 0);
+    	open.add(s);
+    	
+    	while(open.size() != 0) {
+    		current = open.poll();
+    		LinkedList<Position> adjacent = graph.getAdjacents(current.getPosition());
+    		for (int i = 0; i < adjacent.size(); i++) {
+    			Position currentAdjacentP = adjacent.get(i);
+    			Relative currentAdjacentR = new Relative(currentAdjacentP);
+    			currentAdjacentR.setParent(current);
+    			if(currentAdjacentP.equals(end)) {
+    				return currentAdjacentR;
+    			}
+    			int h = (int)Math.sqrt(Math.pow(Math.abs(currentAdjacentP.getX() - end.getX()), 2) + Math.pow(Math.abs(currentAdjacentP.getY() - end.getY()), 2));
+    			int g;
+    			if (currentAdjacentR.getParent() == null) {
+    				g = 0;
+    			} else {
+    				g = currentAdjacentR.getParent().getG() + graph.getWeight(currentAdjacentP, current.getPosition());
+    			}
+    			int index = open.indexOf(currentAdjacentR);
+    			if(index != -1 && open.get(index).getCost() < (h+g)) {
+    				continue;
+    			}
+    			index = closed.indexOf(currentAdjacentR);
+    			if(index != -1 && closed.get(index).getCost() < (h+g)) {
+    				continue;
+    			} else {
+    				open.add(currentAdjacentR);
+    			}
+			}
+    		closed.add(current);
+    		Comparator<Relative> sort = new Relative();
+    		open.sort(sort);
+    	}
+    	return null;
+    }
+    
+    private static LinkedList<Position> getPath(Relative r){
     	LinkedList<Position> path = new LinkedList<Position>();
+    	do {
+    		path.addFirst(r.getPosition());
+    		r = r.getParent();
+    	} while (r.getParent() != null);
+    	path.addFirst(start);
     	
     	return path;
     }
 
     public static void main(String[] args) throws IOException, Exception {
         long startT = System.currentTimeMillis();
+        String img = "mazes/maze10.png";
 
-        Graph maze = bufferToGraph(imageToBuffer("mazes/maze1.png"));
+        Graph maze = bufferToGraph(imageToBuffer(img));
+        
+        System.out.println(start.getX() + ", " + start.getY() + " to " + end.getX() + ", " + end.getY());
+        System.out.println(nodes.size());
+        
+        Relative last = aStar(maze);
+        LinkedList<Position> path = getPath(last);
+        
+        BufferedImage image = imageToBuffer(img);
+        for (int i = 0; i < path.size()-1; i++) {
+        	Position c1 = path.get(i);
+        	Position c2 = path.get(i+1);
+        	draw(image, c1, c2, green);
+        	System.out.println(c1.getX() + ", " + c1.getY() + " to " + c2.getX() + ", " + c2.getY());
+		}
+        ImageIO.write(image, "png", new File(img + ".sol.png"));
 
-        System.out.println("\n\nTotal computation time: " + (System.currentTimeMillis() - startT) + "ms");
+        System.out.println("\nTotal computation time: " + (System.currentTimeMillis() - startT) + "ms");
     }
 }
