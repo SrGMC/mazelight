@@ -46,26 +46,6 @@ public class Mazelight {
     }
     
     /**
-     * Sorts a LinkedList with Positions by weight
-     * @param graph Graph object to get the weights from
-     * @param start Start position
-     * @param list LinkedList with nodes to sort
-     * @return void
-     */
-    private static void sortByWeight(Graph graph, Position start, LinkedList<Position> list){
-        for(int i = 0; i < list.size(); i++){
-            for(int j = 0; j < list.size()-i-1; j++){
-                if(graph.getWeight(start, list.get(j)) > graph.getWeight(start, list.get(j+1))){
-                    Position temp = list.get(j);
-                    list.set(j, list.get(j+1));
-                    list.set(j+1, temp);
-                }
-            }
-        }
-
-    }
-    
-    /**
      * Converts an image into a BufferedImage object
      * @param path Absolute or relative path of the image
      * @return {@link BufferedImage}
@@ -159,7 +139,7 @@ public class Mazelight {
     }
     
     /**
-     * Solves a graph using A* algorithm
+     * Solves a graph using A* algorithm. See https://github.com/SrGMC/mazelight/wiki/Pseudocode#a
      * @param graph Graph to solve
      * @return Path as LinkedList
      */
@@ -207,6 +187,11 @@ public class Mazelight {
     	return null;
     }
     
+    /**
+     * Generate a path ending with r
+     * @param r Last Relative to end the path with
+     * @return Path list
+     */
     private static LinkedList<Position> getPath(Relative r){
     	LinkedList<Position> path = new LinkedList<Position>();
     	do {
@@ -217,28 +202,52 @@ public class Mazelight {
     	
     	return path;
     }
+    
+    public enum ALGO {
+        ASTAR
+    }
 
-    public static void main(String[] args) throws IOException, Exception {
-        long startT = System.currentTimeMillis();
-        String img = "mazes/maze10.png";
-
-        Graph maze = bufferToGraph(imageToBuffer(img));
-        
-        System.out.println(start.getX() + ", " + start.getY() + " to " + end.getX() + ", " + end.getY());
-        System.out.println(nodes.size());
-        
-        Relative last = aStar(maze);
+    /**
+     * Solves a maze given from an input image
+     * @param input Path of the image to solve
+     * @param output Path of the solved image
+     * @param algo Algorithm to use
+     * @return true or false, depending on the result of the execution
+     * @throws IOException
+     * @throws Exception
+     */
+    public static boolean solve(String input, String output, ALGO algo) throws IOException, Exception  {
+    	Graph maze = bufferToGraph(imageToBuffer(input));
+		Relative last;
+    	switch (algo) {
+    		case ASTAR:
+    			last = aStar(maze);
+    			break;
+    		default:
+    			return false;
+    	}
         LinkedList<Position> path = getPath(last);
-        
-        BufferedImage image = imageToBuffer(img);
+        BufferedImage image = imageToBuffer(input);
         for (int i = 0; i < path.size()-1; i++) {
         	Position c1 = path.get(i);
         	Position c2 = path.get(i+1);
         	draw(image, c1, c2, green);
-        	System.out.println(c1.getX() + ", " + c1.getY() + " to " + c2.getX() + ", " + c2.getY());
 		}
-        ImageIO.write(image, "png", new File(img + ".sol.png"));
-
-        System.out.println("\nTotal computation time: " + (System.currentTimeMillis() - startT) + "ms");
+        ImageIO.write(image, "png", new File(output));
+        return true;
+    }
+    
+    public static void main(String[] args) throws IOException, Exception {
+        long startT = System.currentTimeMillis();
+        if(args.length != 2) {
+        	System.out.println("Usage: java mazelight.jar <input image path> <output image path>");
+        	System.exit(1);
+        }
+        if(solve(args[0], args[1], ALGO.ASTAR)) {
+        	System.out.println("Done...");
+        } else {
+        	throw new Exception("Unknown algorithm");
+        }
+        System.out.println("Total computation time: " + (System.currentTimeMillis() - startT) + "ms");
     }
 }

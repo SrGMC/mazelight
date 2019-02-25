@@ -28,18 +28,34 @@ public class Edge{
         }
     }
 
+    /**
+     * Get the start of the edge
+     * @return Position start object
+     */
     public Position getStart() {
         return start;
     }
 
+    /**
+     * Get the end of the edge
+     * @return Position end object
+     */
     public Position getEnd() {
         return end;
     }
 
+    /**
+     * Get the weight of the edge
+     * @return weight
+     */
     public int getWeight() {
         return weight;
     }
 
+    /**
+     * Set the weight of the edge
+     * @param weight
+     */
     public void setWeight(int weight) {
         this.weight = weight;
     }
