@@ -18,9 +18,6 @@ import java.util.LinkedList;
  */
 
 public class Mazelight {
-    public static Position start = null;
-    public static Position end = null;
-    
     /**
      * Solves a maze given from an input image
      * @param input Path of the image to solve
@@ -66,7 +63,6 @@ public class Mazelight {
     		path.addFirst(r.getPosition());
     		r = r.getParent();
     	} while (r.getParent() != null);
-    	path.addFirst(start);
     	
     	return path;
     }

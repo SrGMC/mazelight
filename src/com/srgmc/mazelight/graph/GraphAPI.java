@@ -6,13 +6,15 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 import com.srgmc.mazelight.ImageTools;
-import com.srgmc.mazelight.Mazelight;
 import com.srgmc.mazelight.Position;
 import com.srgmc.mazelight.Relative;
 import com.srgmc.mazelight.Mazelight.ALGO;
 
 public class GraphAPI {
     private static LinkedList<Position> nodes = new LinkedList<Position>();
+    private static Position start = null;
+    private static Position end = null;
+    
     
     /**
      * Solves a maze given from an input image
@@ -53,7 +55,7 @@ public class GraphAPI {
      * @throws IOException
      * @throws Exception
      */
-    public static Graph bufferToGraph(BufferedImage img) throws IOException, Exception{
+    private static Graph bufferToGraph(BufferedImage img) throws IOException, Exception{
         Graph graph = new Graph();
 
         //Node finder
@@ -81,11 +83,11 @@ public class GraphAPI {
         for(int i = 0; i < img.getWidth(); i++){
             for(int j = 0; j < img.getHeight(); j++){
                 if((i == 0 || i == img.getWidth()-1 || j == 0 || j == img.getHeight()-1) && img.getRGB(i, j) == ImageTools.white){
-                    if(Mazelight.start == null){
-                    	Mazelight.start = new Position(i,j);
+                    if(start == null){
+                    	start = new Position(i,j);
                         nodes.addFirst(new Position(i, j));
-                    } else if (Mazelight.end == null){
-                    	Mazelight.end = new Position(i,j);
+                    } else if (end == null){
+                    	end = new Position(i,j);
                         nodes.addLast(new Position(i, j));
                     }
                 }
@@ -121,9 +123,9 @@ public class GraphAPI {
     	LinkedList<Relative> closed = new LinkedList<Relative>();
     	Relative current;
     	
-    	int heuristic = (int)Math.sqrt(Math.pow(Math.abs(Mazelight.start.getX() - Mazelight.end.getX()), 2) + 
-    			Math.pow(Math.abs(Mazelight.start.getY() - Mazelight.end.getY()), 2));
-    	Relative s = new Relative(Mazelight.start, heuristic, 0);
+    	int heuristic = (int)Math.sqrt(Math.pow(Math.abs(start.getX() - end.getX()), 2) + 
+    			Math.pow(Math.abs(start.getY() - end.getY()), 2));
+    	Relative s = new Relative(start, heuristic, 0);
     	open.add(s);
     	
     	while(open.size() != 0) {
@@ -133,11 +135,11 @@ public class GraphAPI {
     			Position currentAdjacentP = adjacent.get(i);
     			Relative currentAdjacentR = new Relative(currentAdjacentP);
     			currentAdjacentR.setParent(current);
-    			if(currentAdjacentP.equals(Mazelight.end)) {
+    			if(currentAdjacentP.equals(end)) {
     				return currentAdjacentR;
     			}
-    			int h = (int)Math.sqrt(Math.pow(Math.abs(currentAdjacentP.getX() - Mazelight.end.getX()), 2) + 
-    					Math.pow(Math.abs(currentAdjacentP.getY() - Mazelight.end.getY()), 2));
+    			int h = (int)Math.sqrt(Math.pow(Math.abs(currentAdjacentP.getX() - end.getX()), 2) + 
+    					Math.pow(Math.abs(currentAdjacentP.getY() - end.getY()), 2));
     			int g;
     			if (currentAdjacentR.getParent() == null) {
     				g = 0;
