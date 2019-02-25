@@ -1,4 +1,6 @@
-package com.srgmc.mazelight;
+package com.srgmc.mazelight.graph;
+
+import com.srgmc.mazelight.Position;
 
 /**
  * Object to store information about and Edge. Used by Graph

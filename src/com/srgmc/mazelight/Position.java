@@ -9,7 +9,6 @@ package com.srgmc.mazelight;
 public class Position{
     private int x;
     private int y;
-    private Position parent;
 
     /**
      * Constructor
@@ -49,20 +48,4 @@ public class Position{
     public boolean equals(Position pos){
         return this.x == pos.getX() && this.y == pos.getY();
     }
-    
-    /**
-     * Get parent
-     * @return Position parent object
-     */
-    public Position getParent() {
-		return this.parent;
-	}
-	
-    /**
-     * Set parent
-     * @param parent Position object to be parent
-     */
-	public void setParent(Position parent) {
-		this.parent = parent;
-	}
 }

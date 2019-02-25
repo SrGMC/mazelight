@@ -1,6 +1,8 @@
-package com.srgmc.mazelight;
+package com.srgmc.mazelight.graph;
 
 import java.util.LinkedList;
+
+import com.srgmc.mazelight.Position;
 
 /**
  * Data type to store information about a Graph
