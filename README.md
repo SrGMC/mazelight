@@ -1,3 +1,4 @@
+**Notice**: Due to studies and other reasons, I'm currently unable to continue developing the project, however, new pull requests are welcome and I'll pick it up when my time allows.
 
 ![Mazelight logo](https://github.com/SrGMC/mazelight/raw/master/logo.png)  
 Language: **[en](https://github.com/SrGMC/mazelight/blob/master/README.md)**
